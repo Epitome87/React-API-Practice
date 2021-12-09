@@ -1,0 +1,28 @@
+.TriviaItem {
+  color: white;
+}
+
+.TriviaItem h2 {
+  font-size: 2rem;
+  color: rgb(33, 26, 138);
+}
+
+.TriviaItem ol {
+  list-style: none;
+  padding: 1rem;
+  margin: 1rem;
+}
+
+.TriviaItem li {
+  cursor: pointer;
+  padding: 1rem;
+  margin: 1rem;
+  border: 2px solid black;
+  border-radius: 10px;
+  background-color: black;
+}
+
+.TriviaItem li:hover {
+  transform: scale(1.05);
+  background-color: rgba(0, 0, 0, 0.5);
+}
