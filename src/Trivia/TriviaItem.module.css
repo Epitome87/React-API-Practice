@@ -1,28 +1,43 @@
 .TriviaItem {
   color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .TriviaItem h2 {
   font-size: 2rem;
-  color: rgb(33, 26, 138);
+  padding: 1rem;
+  margin: 3rem 1rem 1rem 1rem;
+  color: white;
+  max-width: 700px;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  border: 2px dashed white;
 }
 
 .TriviaItem ol {
+  display: flex;
+  justify-content: center;
   list-style: none;
   padding: 1rem;
   margin: 1rem;
 }
 
 .TriviaItem li {
+  max-width: 350px;
   cursor: pointer;
   padding: 1rem;
   margin: 1rem;
-  border: 2px solid black;
+  border: 2px solid white;
   border-radius: 10px;
-  background-color: black;
+  background-color: rgba(0, 0, 0, 0.5);
+  transition: 0.3s ease-in-out;
 }
 
 .TriviaItem li:hover {
-  transform: scale(1.05);
-  background-color: rgba(0, 0, 0, 0.5);
+  transform: scale(1.025);
+  background-color: rgba(0, 0, 0, 0.75);
 }
