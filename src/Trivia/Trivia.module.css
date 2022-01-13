@@ -1,9 +1,10 @@
 .Trivia {
   color: white;
-  height: 100vh;
+  min-height: 100vh;
   background: url(../images//Abstract-BG.jpg);
   background-repeat: no-repeat;
   background-size: cover;
+  background-attachment: fixed;
 }
 
 .questionNumber {

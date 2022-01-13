@@ -1,5 +1,5 @@
-import React from 'react';
-import classes from './TriviaItem.module.css';
+import React from "react";
+import classes from "./TriviaItem.module.css";
 
 // Contains a trivia question, along with its answers (typically multiple choice)
 function TriviaItem({
