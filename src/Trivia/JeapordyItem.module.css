@@ -1,0 +1,63 @@
+.JeapordyItem {
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 10vh;
+  width: 10vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  border: 2px solid white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.JeapordyItem_Visible {
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 10vh;
+  width: 10vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  border: 2px solid white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.JeapordyItem h2 {
+  font-size: 2rem;
+  padding: 1rem;
+  margin: 3rem 1rem 1rem 1rem;
+  color: white;
+  max-width: 700px;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  border: 2px dashed white;
+}
+
+.JeapordyItem ol {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  padding: 1rem;
+  margin: 1rem;
+}
+
+.JeapordyItem li {
+  max-width: 350px;
+  cursor: pointer;
+  padding: 1rem;
+  margin: 1rem;
+  border: 2px solid white;
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.5);
+  transition: 0.3s ease-in-out;
+}
+
+.JeapordyItem li:hover {
+  transform: scale(1.025);
+  background-color: rgba(0, 0, 0, 0.75);
+}

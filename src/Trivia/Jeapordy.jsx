@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import TriviaItem from "./TriviaItem";
 import axios from "axios";
 import { v4 as uuid } from "uuid";
-import classes from "./Trivia.module.css";
+import classes from "./Jeapordy.module.css";
+import JeapordyCategory from "./JeapordyCategory";
 
 const CATEGORY_TO_NUM = {
   generalKnowldge: 9,
@@ -37,14 +38,15 @@ const randomCategoryNumber = () => {
 
 // Represents a Trivia game. Keeps track of a list of Trivia questions
 function Jeapordy() {
-  const NUM_QUESTIONS = 10;
+  const NUM_CATEGORIES = 5;
+  const NUM_QUESTIONS_PER_CATEGORY = 5;
   const [isLoading, setIsLoading] = useState(true);
   const [triviaQuestions, setTriviaQuestions] = useState([]);
   const [currentQuestionNumber, setCurrentQuestionNumber] = useState(0);
   const [score, setScore] = useState(0);
 
   useEffect(() => {
-    fetchTrivia(NUM_QUESTIONS);
+    fetchTrivia(NUM_CATEGORIES, NUM_QUESTIONS_PER_CATEGORY);
   }, []);
 
   const fetchQuestion = async (category, difficulty) => {
@@ -55,15 +57,20 @@ function Jeapordy() {
     const result = fetchedQuestion.data.results[0];
 
     console.log("HELP", fetchedQuestion.data.results);
-    return {
+
+    const transformedData = {
       id: uuid(),
       incorrectAnswers: result["incorrect_answers"].map((wrongAnswer) =>
         atob(wrongAnswer)
       ),
       correctAnswer: atob(result["correct_answer"]),
       question: atob(result.question),
-      category: result.category,
+      category: atob(result.category),
+      difficulty: atob(result.difficulty),
     };
+
+    console.log("HALPPP", transformedData);
+    return transformedData;
   };
 
   const fetchCategoryOfQuestions = async (
@@ -79,20 +86,21 @@ function Jeapordy() {
       else if (i < 4) difficulty = "medium";
 
       const question = await fetchQuestion(category, difficulty);
+      question.value = (i + 1) * 100;
       categoryOfQuestions.push(question);
     }
 
     return { category, questions: categoryOfQuestions };
   };
 
-  const fetchTrivia = async (numTrivia) => {
+  const fetchTrivia = async (numCategories, numQuestionsPerCategory) => {
     // Each item in this array contains a list of questions related to that category
     const categories = [];
 
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < numCategories; i++) {
       const categoryOfQuestions = await fetchCategoryOfQuestions(
         randomCategoryNumber(),
-        5
+        numQuestionsPerCategory
       );
       categories.push(categoryOfQuestions);
     }
@@ -116,40 +124,15 @@ function Jeapordy() {
 
   const renderedCategories = () => {
     return (
-      <div>
+      <div className={classes.Board}>
         {triviaQuestions.map((category, index) => {
-          return (
-            <div key={`category${index}`}>
-              <h2>Category: {category.category}</h2>
-              {category.questions.map((question) => {
-                return (
-                  <TriviaItem
-                    key={question.id}
-                    questionNumber={currentQuestionNumber + 1}
-                    question={question.question}
-                    correctAnswer={question.correctAnswer}
-                    incorrectAnswers={question.incorrectAnswers}
-                    handleClickAnswer={handleSubmitAnswer}
-                  />
-                );
-              })}
-            </div>
-          );
+          return <JeapordyCategory category={category} />;
         })}
       </div>
     );
   };
 
-  return (
-    <section className={classes.Trivia}>
-      <p className={classes.questionNumber}>
-        Question #{currentQuestionNumber + 1} of {NUM_QUESTIONS}
-      </p>
-      {renderedCategories()}
-      <p className={classes.score}>Score: {score}</p>
-      <button onClick={handleSubmitAnswer}>Skip Question</button>
-    </section>
-  );
+  return <section className={classes.Trivia}>{renderedCategories()}</section>;
 }
 
 export default Jeapordy;
