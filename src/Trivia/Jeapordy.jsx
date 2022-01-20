@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import TriviaItem from "./TriviaItem";
 import axios from "axios";
 import { v4 as uuid } from "uuid";
 import classes from "./Jeapordy.module.css";
@@ -49,14 +48,20 @@ function Jeapordy() {
     fetchTrivia(NUM_CATEGORIES, NUM_QUESTIONS_PER_CATEGORY);
   }, []);
 
+  const handleSubmitWrongAnswer = (triviaItem, guess) => {
+    setScore((prevScore) => prevScore - triviaItem.value);
+  };
+
+  const handleSubmitCorrectAnswer = (triviaItem, guess) => {
+    setScore((prevScore) => prevScore + triviaItem.value);
+  };
+
   const fetchQuestion = async (category, difficulty) => {
     const fetchedQuestion = await axios.get(
       `https://opentdb.com/api.php?amount=1&category=${category}&difficulty=${difficulty}&encode=base64`
     );
 
     const result = fetchedQuestion.data.results[0];
-
-    console.log("HELP", fetchedQuestion.data.results);
 
     const transformedData = {
       id: uuid(),
@@ -67,9 +72,10 @@ function Jeapordy() {
       question: atob(result.question),
       category: atob(result.category),
       difficulty: atob(result.difficulty),
+      onClickWrongAnswer: handleSubmitWrongAnswer,
+      onClickCorrectAnswer: handleSubmitCorrectAnswer,
     };
 
-    console.log("HALPPP", transformedData);
     return transformedData;
   };
 
@@ -109,15 +115,6 @@ function Jeapordy() {
     setIsLoading(false);
   };
 
-  const handleSubmitAnswer = (guess) => {
-    if (guess === triviaQuestions[currentQuestionNumber].correctAnswer) {
-      setScore((score) => score + 1);
-      setCurrentQuestionNumber((num) => num + 1);
-    } else {
-      console.log("WRONG");
-    }
-  };
-
   if (isLoading) return <p>Loading Trivia...</p>;
 
   if (triviaQuestions) console.log(triviaQuestions);
@@ -125,6 +122,7 @@ function Jeapordy() {
   const renderedCategories = () => {
     return (
       <div className={classes.Board}>
+        <p>Score: {score} </p>
         {triviaQuestions.map((category, index) => {
           return <JeapordyCategory category={category} />;
         })}

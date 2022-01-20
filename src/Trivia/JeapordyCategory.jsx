@@ -16,7 +16,8 @@ function JeapordyCategory({ category }) {
             incorrectAnswers={question.incorrectAnswers}
             difficulty={question.difficulty}
             value={question.value}
-            handleClickAnswer={() => {}}
+            onClickWrongAnswer={question.onClickWrongAnswer}
+            onClickRightAnswer={question.onClickRightAnswer}
           />
         );
       })}
